@@ -101,8 +101,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'ElastiCluster'
-copyright = u'2013-2019, University of Zurich; 2020, ETH Zurich'
+project = 'ElastiCluster'
+copyright = '2013-2019, University of Zurich; 2020, ETH Zurich'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -258,8 +258,8 @@ latex_elements = {
 latex_documents = [
   ('index',                  # source start file
    'elasticluster.tex',      # target name
-   u'ElastiCluster Manual',  # title
-   u'Riccardo Murri',        # author
+   'ElastiCluster Manual',  # title
+   'Riccardo Murri',        # author
    'manual'),                # documentclass (howto/manual)
 ]
 
@@ -290,8 +290,8 @@ latex_documents = [
 man_pages = [
   ('index',                  # source start file
    'elasticluster',          # name
-   u'ElastiCluster Manual',  # description
-   [u'Riccardo Murri'],      # author(s)
+   'ElastiCluster Manual',  # description
+   ['Riccardo Murri'],      # author(s)
    1),                       # man section
 ]
 
@@ -305,8 +305,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'elasticluster', u'ElastiCluster Manual',
-   u'Services and Support for Science IT, University of Zurich',
+  ('index', 'elasticluster', 'ElastiCluster Manual',
+   'Services and Support for Science IT, University of Zurich',
    'elasticluster', 'Set up and scale virtual clusters.',
    'Miscellaneous'),
 ]

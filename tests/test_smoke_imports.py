@@ -17,7 +17,7 @@
 #
 # pylint: disable=missing-docstring,unused-variable,wrong-import-position
 
-from __future__ import absolute_import
+
 
 # this is needed to get logging info in `py.test` when something fails
 import logging

@@ -184,7 +184,7 @@ def _assemble_linux_cmdline(kv):
     """
     # try to be compatible with Py2.4
     parts = []
-    for k, v in kv.items():
+    for k, v in list(kv.items()):
         if v is None:
             parts.append(str(k))
         else:
@@ -373,7 +373,7 @@ BOOTLOADERS = {
 
 
 def find_bootloader_config():
-    for path, bootloader in PATHS.items():
+    for path, bootloader in list(PATHS.items()):
         if os.path.exists(path):
             return path, bootloader
     raise LookupError(

@@ -76,7 +76,7 @@ def environment(**kv):
     """
     added = []
     changed = {}
-    for key, value in kv.items():
+    for key, value in list(kv.items()):
         if key not in os.environ:
             added.append(key)
         else:
@@ -527,13 +527,13 @@ class Struct(DictMixin, object):
         if initializer is not None:
             try:
                 # initializer is `dict`-like?
-                for name, value in initializer.items():
+                for name, value in list(initializer.items()):
                     self[name] = value
             except AttributeError:
                 # initializer is a sequence of (name,value) pairs?
                 for name, value in initializer:
                     self[name] = value
-        for name, value in extra.items():
+        for name, value in list(extra.items()):
             self[name] = value
 
     def copy(self):

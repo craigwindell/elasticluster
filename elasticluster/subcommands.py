@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from __future__ import print_function
+
 
 # compatibility imports
 from future.utils import with_metaclass
@@ -190,7 +190,7 @@ class Start(AbstractCommand):
 
         # possibly overwrite node mix from config
         cluster_nodes_conf = creator.cluster_conf[cluster_template]['nodes']
-        for kind, num in self.params.nodes_override.items():
+        for kind, num in list(self.params.nodes_override.items()):
             if kind not in cluster_nodes_conf:
                 raise ConfigurationError(
                     "No node group `{kind}` defined"
@@ -593,7 +593,7 @@ class ListTemplates(AbstractCommand):
         config = creator.cluster_conf
 
         print("""%d cluster templates found in configuration file.""" % len(config))
-        templates = config.keys()
+        templates = list(config.keys())
         # filter results by AND'ing all patterns on the cmd line
         for pattern in self.params.clusters:
             templates = [t for t in templates if fnmatch(t, pattern)]

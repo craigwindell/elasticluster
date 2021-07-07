@@ -32,8 +32,8 @@ import re
 import sys
 
 if sys.version_info[0] == 2:
-    from ConfigParser import RawConfigParser
-    from cStringIO import StringIO
+    from configparser import RawConfigParser
+    from io import StringIO
 else:
     from configparser import RawConfigParser
     from io import StringIO

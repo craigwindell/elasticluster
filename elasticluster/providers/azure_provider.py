@@ -455,7 +455,7 @@ class AzureCloudProvider(AbstractCloudProvider):
         # and search for `.code == "PowerState/running"`? or
         # `vm.instance_view.vm_agent.statuses` and search for `.code
         # == 'ProvisioningState/suceeded'`?
-        return vm.provisioning_state == u'Succeeded'
+        return vm.provisioning_state == 'Succeeded'
 
     def _get_vm(self, instance_id, force_reload=True):
         """

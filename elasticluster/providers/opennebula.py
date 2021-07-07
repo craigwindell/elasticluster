@@ -301,7 +301,7 @@ class OpenNebulaCloudProvider(AbstractCloudProvider):
         assert ('NETWORK' in template['NIC'][0] or 'NETWORK_ID' in template['NIC'][0])
 
         parts = []
-        for key, value in template.items():
+        for key, value in list(template.items()):
             if key in ['NIC']:
                 # by construction, these items are lists
                 for item in template[key]:
@@ -313,7 +313,7 @@ class OpenNebulaCloudProvider(AbstractCloudProvider):
                             values=',\n'.join(
                                 '{K}="{v}"'
                                 .format(K=k.upper(), v=v)
-                                for k,v in item.items())))
+                                for k,v in list(item.items()))))
             elif isinstance(value, dict):
                 parts.append(
                     '{KEY}=[ {values} ]'
@@ -323,7 +323,7 @@ class OpenNebulaCloudProvider(AbstractCloudProvider):
                         values=',\n'.join(
                             '{K}="{v}"'
                             .format(K=k.upper(), v=v)
-                            for k,v in value.items())))
+                            for k,v in list(value.items()))))
             else:
                 parts.append(
                     '{KEY}="{value}"'

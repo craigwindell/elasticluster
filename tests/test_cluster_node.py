@@ -20,7 +20,7 @@ Test the `Node` class from the `elasticluster.cluster` module.
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import absolute_import
+
 
 # this is needed to get logging info in `py.test` when something fails
 import logging

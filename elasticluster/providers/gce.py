@@ -363,7 +363,7 @@ class GoogleCloudProvider(AbstractCloudProvider):
             image_url = image_id
         else:
             # allow image shortcuts (see docstring for IMAGE_NAME_SHORTCUTS)
-            for prefix, os_cloud in self.IMAGE_NAME_SHORTCUTS.items():
+            for prefix, os_cloud in list(self.IMAGE_NAME_SHORTCUTS.items()):
                 if image_id.startswith(prefix + '-'):
                     image_url = '%s%s/global/images/%s' % (
                         GCE_URL, os_cloud, image_id)
@@ -380,7 +380,7 @@ class GoogleCloudProvider(AbstractCloudProvider):
         elif scheduling is not None:
             raise InstanceError("Unknown scheduling option: '%s'" % scheduling)
 
-        if isinstance(tags, (str,)):
+        if isinstance(tags, str):
             tags = tags.split(',')
         elif isinstance(tags, Sequence):
             # ok, nothing to do

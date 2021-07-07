@@ -85,7 +85,7 @@ class DockerSession(object):
                 },
             }),
         )
-        self._container_id = self._container[u'Id']
+        self._container_id = self._container['Id']
         self._docker.start(self._container_id)
         self._running = True
         logging.info(
@@ -101,12 +101,12 @@ class DockerSession(object):
         if shell:
             cmd = 'sh -c "{cmd}"'.format(**locals())
         e = self._docker.exec_create(self._container_id, cmd)
-        e_id = e[u'Id']
+        e_id = e['Id']
 
         logging.info("Running '%s' ...", cmd)
         output = self._docker.exec_start(e_id)
         details = self._docker.exec_inspect(e_id)
-        exitcode = details[u'ExitCode']
+        exitcode = details['ExitCode']
         logging.debug(
             "Command '%s' exited with code %d and output '%s'",
             cmd, exitcode, output)

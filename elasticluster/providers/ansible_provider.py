@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import division
+
 
 # compatiblity imports
 from future import standard_library
@@ -323,7 +323,7 @@ class AnsibleSetupProvider(AbstractSetupProvider):
                 "Could not import module `ara`:"
                 " no detailed information about the playbook will be recorded.")
         # ...override them with key/values set in the config file(s)
-        for k, v in self.extra_conf.items():
+        for k, v in list(self.extra_conf.items()):
             if k.startswith('ansible_'):
                 ansible_env[k.upper()] = str(v)
         # ...finally allow the environment have the final word
@@ -491,14 +491,14 @@ class AnsibleSetupProvider(AbstractSetupProvider):
             # abuse Python's %r fomat to provide quotes around the
             # value, and \-escape any embedded quote chars
             extra_vars.extend('%s=%r' % (k, str(v)) for k, v in
-                              extra_conf.items()
+                              list(extra_conf.items())
                               if k.startswith('ansible_'))
 
             if node.kind in self.environment:
                 # abuse Python's %r fomat to provide quotes around the
                 # value, and \-escape any embedded quote chars
                 extra_vars.extend('%s=%r' % (k, str(v)) for k, v in
-                                  self.environment[node.kind].items())
+                                  list(self.environment[node.kind].items()))
 
             for group in self.groups[node.kind]:
                 inventory_data[group].append(
@@ -520,7 +520,7 @@ class AnsibleSetupProvider(AbstractSetupProvider):
             self._storage_path, (cluster.name + '.inventory'))
         log.debug("Writing Ansible inventory to file `%s` ...", inventory_path)
         with open(inventory_path, 'w+') as inventory_file:
-            for section, hosts in inventory_data.items():
+            for section, hosts in list(inventory_data.items()):
                 # Ansible throws an error "argument of type 'NoneType' is not
                 # iterable" if a section is empty, so ensure we have something
                 # to write in there
@@ -573,7 +573,7 @@ class AnsibleSetupProvider(AbstractSetupProvider):
         extra_vars['cloud'] = cluster.cloud_provider.to_vars_dict()
         nodes = extra_vars.pop('nodes')
         extra_vars['nodes'] = {}
-        for kind, instances in nodes.items():
+        for kind, instances in list(nodes.items()):
             for node in instances:
                 node_vars = node.to_vars_dict()
                 node_vars.update(node_vars.pop('extra', {}))

@@ -17,7 +17,7 @@
 #
 # pylint: disable=missing-docstring
 
-from __future__ import absolute_import
+
 
 # this is needed to get logging info in `py.test` when something fails
 import logging
@@ -112,7 +112,7 @@ def test_start(tmpdir):
     cluster.repository.save_or_update.assert_called_with(cluster)
 
     for node in cluster.get_all_nodes():
-        assert node.instance_id == u'test-id'
+        assert node.instance_id == 'test-id'
         assert node.ips == ['127.0.0.1']
 
 

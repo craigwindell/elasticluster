@@ -173,7 +173,7 @@ class Cluster(Struct):
         self.nodes = {}
         # Build the internal nodes. This is mostly useful when loading
         # the cluster from JSON files.
-        for kind, nodes in extra.pop('nodes', {}).items():
+        for kind, nodes in list(extra.pop('nodes', {}).items()):
             for node in nodes:
                 # adding un-named nodes before NodeNamingPolicy has
                 # been fully populated can lead to duplicate names
@@ -190,7 +190,7 @@ class Cluster(Struct):
 
         # attributes that have already been defined trump whatever is
         # in the `extra` dictionary
-        for key, value in extra.items():
+        for key, value in list(extra.items()):
             if key not in self:
                 self.extra[key] = value
 
@@ -247,7 +247,7 @@ class Cluster(Struct):
         self.__dict__['_cloud_provider'] = None
         # restore naming policy state
         naming_policy = NodeNamingPolicy()
-        for kind, nodes in self.nodes.items():
+        for kind, nodes in list(self.nodes.items()):
             for node in nodes:
                 naming_policy.use(kind, node.name)
         self.__dict__['_naming_policy'] =  naming_policy
@@ -648,8 +648,8 @@ class Cluster(Struct):
                                      " using IP address %s to connect.",
                                      node.name, node.connection_ip())
                             # Add host keys to the keys object.
-                            for host, key in ssh.get_host_keys().items():
-                                for keytype, keydata in key.items():
+                            for host, key in list(ssh.get_host_keys().items()):
+                                for keytype, keydata in list(key.items()):
                                     keys.add(host, keytype, keydata)
                             self._save_keys_to_known_hosts_file(keys)
                             nodes.remove(node)
@@ -676,7 +676,7 @@ class Cluster(Struct):
         if min_nodes is None:
             min_nodes = {}
         # check that each group has a minimum value
-        for group, nodes in self.nodes.items():
+        for group, nodes in list(self.nodes.items()):
             if group not in min_nodes:
                 min_nodes[group] = len(nodes)
         return min_nodes
@@ -694,7 +694,7 @@ class Cluster(Struct):
         """
         # finding all node groups with an unsatisfied amount of nodes
         unsatisfied = 0
-        for kind, required in min_nodes.items():
+        for kind, required in list(min_nodes.items()):
             available = len(self.nodes.get(kind, []))
             if available < required:
                 log.error(
@@ -713,7 +713,7 @@ class Cluster(Struct):
 
         :return: list of :py:class:`Node`
         """
-        return sum(self.nodes.values(), [])
+        return sum(list(self.nodes.values()), [])
 
 
     def get_node_by_name(self, nodename):
@@ -722,7 +722,7 @@ class Cluster(Struct):
         :params nodename: Name of the node
         :type nodename: str
         """
-        for kind, nodes in self.nodes.items():
+        for kind, nodes in list(self.nodes.items()):
             for node in nodes:
                 if node.name == nodename:
                     return node
@@ -1197,7 +1197,7 @@ class NodeNamingPolicy(object):
                 self._free[kind].remove(index)
             top = self._top[kind]
             if index > top:
-                self._free[kind].update(range(top + 1, index))
+                self._free[kind].update(list(range(top + 1, index)))
                 self._top[kind] = index
         except ValueError:
             log.warning(

@@ -38,7 +38,7 @@ else:
     os.environ['PYTHONPATH'] = spark_pythonpath
 
 # Initialize PySpark to predefine the SparkContext variable 'sc'
-execfile(join(spark_home_python, 'pyspark/shell.py'))
+exec(compile(open(join(spark_home_python, 'pyspark/shell.py'), "rb").read(), join(spark_home_python, 'pyspark/shell.py'), 'exec'))
 
 # clean up variables
 del spark_home

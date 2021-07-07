@@ -44,7 +44,7 @@ def migrate_cluster(cluster):
         if hasattr(cluster, old):
             setattr(cluster, new, getattr(cluster, old))
             delattr(cluster, old)
-    for kind, nodes in cluster.nodes.items():
+    for kind, nodes in list(cluster.nodes.items()):
         for node in nodes:
             if hasattr(node, 'image'):
                 image_id = getattr(node, 'image_id', None) or node.image
@@ -192,7 +192,7 @@ duplication of code.
             with open(path, self.open_mode_for_loading) as storage:
                 cluster = self.load(storage)
                 # Compatibility with previous version of Node
-                for node in sum(cluster.nodes.values(), []):
+                for node in sum(list(cluster.nodes.values()), []):
                     if not hasattr(node, 'ips'):
                         log.debug("Monkey patching old version of `Node` class: %s", node.name)
                         node.ips = [node.ip_public, node.ip_private]
@@ -344,7 +344,7 @@ class MultiDiskRepository(AbstractClusterRepository):
 
     def get_all(self):
         clusters = []
-        for cls in self.storage_type_map.values():
+        for cls in list(self.storage_type_map.values()):
             cluster_files = glob.glob(
                 '%s/*.%s' % (self.storage_path, cls.file_ending))
 
@@ -364,7 +364,7 @@ class MultiDiskRepository(AbstractClusterRepository):
 
     def _get_store_by_name(self, name):
         """Return an instance of the correct DiskRepository based on the *first* file that matches the standard syntax for repository files"""
-        for cls in self.storage_type_map.values():
+        for cls in list(self.storage_type_map.values()):
             filename = os.path.join(self.storage_path,
                                     '{name}.{ending}'.format(
                                         name=name,

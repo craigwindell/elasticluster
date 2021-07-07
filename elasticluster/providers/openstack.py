@@ -720,7 +720,7 @@ class OpenStackCloudProvider(AbstractCloudProvider):
             ip_addrs = set([self.floating_ip])
         except AttributeError:
             ip_addrs = set([])
-        for ip_addr in sum(instance.networks.values(), []):
+        for ip_addr in sum(list(instance.networks.values()), []):
             ip_addrs.add(ip_addr)
         log.debug("VM `%s` has IP addresses %r", instance_id, ip_addrs)
         return list(ip_addrs)
@@ -985,7 +985,7 @@ class OpenStackCloudProvider(AbstractCloudProvider):
             existing = set(sg.name for sg in security_groups)
         except AttributeError:
             security_groups = self.neutron_client.list_security_groups()['security_groups']
-            existing = set(sg[u'name'] for sg in security_groups)
+            existing = set(sg['name'] for sg in security_groups)
 
         # TODO: We should be able to create the security group if it
         # doesn't exist and at least add a rule to accept ssh access.
