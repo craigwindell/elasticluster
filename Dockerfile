@@ -48,7 +48,7 @@ RUN : \
            gcc \
            libc6 libc6-dev \
            libexpat1 libexpat1-dev \
-           libffi6 libffi-dev \
+           libffi7 libffi-dev \
            libssl1.1 libssl-dev \
            make \
            openssh-client \
